@@ -31,9 +31,9 @@ class _InitialRouterState extends State<InitialRouter>
                 Image.network(
                     'https://img.freepik.com/vetores-gratis/palavra-de-grande-venda-com-carrinho-de-compras-caixas-de-presente-loja-mapa-com-ponteiro-em-estilo-realista-ilustracao-vetorial_548887-126.jpg?t=st=1649286180~exp=1649286780~hmac=9ea04a107c3b67cb8a1a4ebea3835313a31362c4a2c93d1fac5942a2ef15842d&w=1380'),
                 AppButtons(
-                    height: 35,
-                    width: 60,
-                    textcolor: Colors.amber,
+                    height: 15,
+                    width: 10,
+                    textcolor: Colors.orange,
                     background: Colors.white,
                     borderColor: Colors.amber,
                     text: "Entrar",
