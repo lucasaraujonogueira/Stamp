@@ -1,3 +1,4 @@
+import 'package:cryptomercard/Views/register_view.dart';
 import 'package:flutter/material.dart';
 
 import '../Components/AppsButtons.dart';
@@ -38,7 +39,14 @@ class _InitialRouterState extends State<InitialRouter>
                     borderColor: Colors.amber,
                     text: "Entrar",
                     widget: ElevatedButton(
-                        onPressed: () {}, child: const Text('Entrar')))
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterView()),
+                          );
+                        },
+                        child: const Text('Entrar')))
               ],
             ),
           )

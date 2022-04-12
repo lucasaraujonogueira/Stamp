@@ -23,6 +23,10 @@ class _RegisterViewState extends State<RegisterView> {
       color: Colors.amber,
       child: ListView(
         children: <Widget>[
+          Container(
+            height: 40,
+            color: Colors.black,
+          ),
           Form(
             child: Column(
               children: <Widget>[
@@ -44,7 +48,7 @@ class _RegisterViewState extends State<RegisterView> {
                   keyboardType: TextInputType.number,
                   controller: _cep,
                   decoration: const InputDecoration(
-                    hintText: 'cep',
+                    hintText: 'Cep',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -55,7 +59,7 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _phone,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    hintText: 'phone',
+                    hintText: 'Phone',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -67,7 +71,7 @@ class _RegisterViewState extends State<RegisterView> {
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
-                    hintText: 'e-mail',
+                    hintText: 'E-mail',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -79,7 +83,7 @@ class _RegisterViewState extends State<RegisterView> {
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: const InputDecoration(
-                    hintText: 'password',
+                    hintText: 'Password',
                     border: OutlineInputBorder(),
                   ),
                 ),
