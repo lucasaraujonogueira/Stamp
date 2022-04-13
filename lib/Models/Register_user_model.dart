@@ -18,20 +18,6 @@ class Usermodel {
       required this.email,
       required this.image});
 
-/*
-  Future<Map<String, dynamic>> json() async {
-    return {
-      'id': id,
-      'image': image,
-      'name': name,
-      'lastname': lastname,
-      'cep': cep,
-      'phone': phone,
-      'email': email,
-      'password': password,
-    };
-  }
-*/
   factory Usermodel.fromJson(Map<String, dynamic> pardesJson) {
     return Usermodel(
         id: pardesJson['id'] as int,

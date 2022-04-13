@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Components/imagesCircular.dart';
+
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
 
@@ -9,6 +11,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late Image imageUser;
   final TextEditingController _name = TextEditingController();
   final TextEditingController _cep = TextEditingController();
   final TextEditingController _phone = TextEditingController();
@@ -30,6 +33,11 @@ class _RegisterViewState extends State<RegisterView> {
           Form(
             child: Column(
               children: <Widget>[
+                ImageCirc(
+                  height: 30,
+                  width: 30,
+                  image: imageUser,
+                ),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _name,
