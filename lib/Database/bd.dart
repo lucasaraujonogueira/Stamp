@@ -6,20 +6,22 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class ConnectionSQLiteService {
-  ConnectionSQLiteService._();
+import '../Models/Register_user_model.dart';
 
-  static ConnectionSQLiteService? _instance;
+class DatabaseHelper {
+  DatabaseHelper._();
 
-  static ConnectionSQLiteService get instance {
-    _instance ??= ConnectionSQLiteService._();
+  static DatabaseHelper? _instance;
+  static const DATABASE_NAME = 'database.db';
+  static const DATABASE_VERSION = 1;
+
+  static DatabaseHelper get instance {
+    _instance ??= DatabaseHelper._();
     return _instance!;
   }
 
   /* ============================================= */
 
-  static const DATABASE_NAME = 'database.db';
-  static const DATABASE_VERSION = 1;
   Database? _db;
 
   Future<Database> get db => _openDatabase();
@@ -40,5 +42,47 @@ class ConnectionSQLiteService {
     db.transaction((reference) async {
       reference.execute(ConnectionSQL.CREATE_DATABASE);
     });
+  }
+
+  static const CREATE_DATABASE = '''
+  CREATE TABLE "${Usermodel.tblUser}" (
+     `${Usermodel.ColId}`	INTEGER PRIMARY KEY AUTOINCREMENT,
+    `${Usermodel.ColName}`	TEXT,
+    `${Usermodel.ColEmail}` TEXT NOT NULL, 
+    `${Usermodel.ColPassword}` TEXT NOT NULL, 
+    		
+  );
+  ''';
+
+  static String selecionarTodosOsContatos() {
+    return 'select * from contatos;';
+  }
+
+  /*
+  static String addUser(Usermodel user) {
+    return '''
+    insert into users (name,password, email)
+    values ('${user.name}', '${user.password}', '${user.email}');
+    ''';
+  }
+  */
+
+  Future<int?> insetUser(Usermodel user) async {
+    Database? db = _db;
+    return await db?.insert(Usermodel.tblUser,
+        {'name': user.name, 'email': user.email, 'password': user.password});
+  }
+
+  static String aupdateUser(Usermodel user) {
+    return '''
+    update contatos
+    set name = '${user.name}',
+    email = '${user.email}'
+    where id = ${user.email};
+    ''';
+  }
+
+  static String deletarContato(Usermodel user) {
+    return 'delete from contatos where id = ${user.email};';
   }
 }

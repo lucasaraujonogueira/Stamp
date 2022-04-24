@@ -1,6 +1,8 @@
+import 'package:cryptomercard/Database/bd.dart';
+import 'package:cryptomercard/Database/sql.dart';
+import 'package:cryptomercard/Models/Register_user_model.dart';
 import 'package:flutter/material.dart';
-
-import '../Components/imagesCircular.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -10,37 +12,56 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  final TextEditingController nameUser = TextEditingController();
+  final TextEditingController cpfUser = TextEditingController();
+  final TextEditingController phoneUser = TextEditingController();
+  final TextEditingController emailUser = TextEditingController();
+  final TextEditingController passwordUser = TextEditingController();
+  var id = 0;
+
+  //List<Usermodel> _usermodels = [];
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late Image imageUser;
-  final TextEditingController _name = TextEditingController();
-  final TextEditingController _cep = TextEditingController();
-  final TextEditingController _phone = TextEditingController();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+
+  List<Usermodel> user = [];
+  List<Usermodel> users = [];
+
+  onSubmite() async {
+    var form = _formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+
+      setState(() {});
+    } else {
+      print('Ocorreu um erro');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _databaseHelper = DatabaseHelper.instance;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.only(top: 70, left: 40, right: 40),
-      color: Colors.amber,
+      padding: const EdgeInsets.only(top: 70, left: 20, right: 20),
+      color: Colors.black,
       child: ListView(
         children: <Widget>[
-          Container(
-            height: 40,
-            color: Colors.black,
-          ),
           Form(
             child: Column(
               children: <Widget>[
-                ImageCirc(
-                  height: 30,
-                  width: 30,
-                  image: imageUser,
+                const SizedBox(
+                  height: 10,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.text,
-                  controller: _name,
+                  controller: nameUser,
                   decoration: const InputDecoration(
                       hintText: 'Informe seu nome',
                       border: OutlineInputBorder(),
@@ -48,59 +69,63 @@ class _RegisterViewState extends State<RegisterView> {
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
                           fontSize: 30)),
+                  validator: (value) {
+                    if (value == null || value.length < 10) {
+                      return 'Nome incompleto';
+                    }
+                    return value;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _cep,
-                  decoration: const InputDecoration(
-                    hintText: 'Cep',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _phone,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    hintText: 'Phone',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _email,
+                  /*
+                  onSaved: (value) => setState(() {
+                    user.email = value as String;
+                  }),
+                  */
+                  controller: emailUser,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
                     hintText: 'E-mail',
                     border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value == null || value.length < 10) {
+                      return 'E-mail vázio';
+                    }
+                    return value;
+                  },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _password,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Error';
+                    }
+                  },
+                  controller: passwordUser,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
+                      hintText: 'Password',
+                      border: OutlineInputBorder(),
+                      fillColor: Colors.green),
                 ),
                 Container(
                     height: 60,
                     alignment: Alignment.center,
                     child: ElevatedButton(
                       onPressed: () {
-                        print(_email);
+                        insert(id, nameUser, cpfUser, emailUser, passwordUser);
+                        Navigator.pop(context);
                       },
                       child: const Text('Registrar'),
                     ))
@@ -113,6 +138,20 @@ class _RegisterViewState extends State<RegisterView> {
   }
 }
 
+void insert(id, name, cpf, email, password) {
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+
+  /*
+  Map<String, dynamic> users = {
+    Usermodel.ColName: name,
+    Usermodel.ColEmail: email,
+    Usermodel.ColPassword: password,
+  };
+  */
+  var user = Usermodel(id: id, name: name, email: email, password: password);
+
+  _databaseHelper.insetUser(user);
+}
 
 /*
   return Container(

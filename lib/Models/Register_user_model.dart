@@ -1,42 +1,37 @@
 class Usermodel {
+  static const tblUser = 'usertable';
+  static const ColId = 'id';
+  static const ColName = 'name';
+  static const ColEmail = 'email';
+  static const ColPassword = 'password';
+
   int id;
-  String image;
   String name;
-  String lastname;
-  int cep;
-  String password;
-  int phone;
   String email;
+  String password;
 
   Usermodel(
       {required this.id,
       required this.name,
-      required this.lastname,
-      required this.cep,
-      required this.password,
-      required this.phone,
       required this.email,
-      required this.image});
+      required this.password});
 
-  factory Usermodel.fromJson(Map<String, dynamic> pardesJson) {
-    return Usermodel(
-        id: pardesJson['id'] as int,
-        name: pardesJson['name'] as String,
-        lastname: pardesJson['lastname'] as String,
-        cep: pardesJson['cep'] as int,
-        password: pardesJson['password'] as String,
-        phone: pardesJson['phone'] as int,
-        email: pardesJson['email'] as String,
-        image: pardesJson['image'] as String);
+  Map toMap(Usermodel user) {
+    return {id: user.id, name: name, email: email, password: password};
   }
 
-  factory Usermodel.fromMap(Map<String, dynamic> json) => Usermodel(
-      id: json['id'],
-      name: json['name'],
-      lastname: json['lastname'],
-      cep: json['cep'],
-      password: json['password'],
-      phone: json['phone'],
-      email: json['email'],
-      image: json['image']);
+  Map<String, dynamic> ToMap() {
+    var map = <String, dynamic>{
+      name: name,
+      email: email,
+      password: password,
+    };
+    if (id != null) map[ColId] = id;
+    return map;
+  }
+
+  @override
+  String toString() {
+    return 'Usermodel{id: $id, name: $name, age: $email, password: $password}';
+  }
 }
